@@ -1,0 +1,32 @@
+@startuml
+title Estados do pedido de carta
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+
+state "Submetido" as submetido
+state "Em elaboração" as em_elaboracao
+state "Aguarda carimbo" as aguarda_carimbo
+state "Pronta para levantamento" as pronta
+state "Devolvido para correcção" as devolvido_para_correcao
+state "Cancelado" as cancelado
+[*] --> submetido : estudante submete
+submetido --> em_elaboracao : Empregabilidade
+em_elaboracao --> aguarda_carimbo : preparação concluída
+aguarda_carimbo --> pronta : operador regista disponibilidade física
+pronta --> [*] : acompanhamento termina na disponibilidade
+submetido --> devolvido_para_correcao : motivo obrigatório
+em_elaboracao --> devolvido_para_correcao : motivo obrigatório
+aguarda_carimbo --> devolvido_para_correcao : motivo obrigatório
+devolvido_para_correcao --> submetido : estudante corrige
+submetido --> cancelado : operador / motivo
+em_elaboracao --> cancelado : operador / motivo
+aguarda_carimbo --> cancelado : operador / motivo
+devolvido_para_correcao --> cancelado : operador / motivo
+cancelado --> [*]
+state "Rejeitado\n(registo antigo)" as rejected
+note right of pronta
+  A carta é recolhida na estante,
+  sem registo de levantamento no sistema.
+end note
+
+@enduml

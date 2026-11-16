@@ -1,0 +1,54 @@
+@startuml
+title Actividades do pedido de carta
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+|Estudante|
+start
+:Indicar entidade destinatária e submeter pedido;
+|Sistema|
+:Validar dados e impedir duplicação recente;
+:Guardar pedido, referência e evento submetido;
+:Notificar Empregabilidade;
+repeat
+  |Empregabilidade|
+  :Consultar pedido, estado e histórico;
+  if (Cancelar antes de pronta?) then (sim)
+    :Indicar motivo;
+    |Sistema|
+    :Guardar cancelado e evento;
+    :Notificar estudante;
+    stop
+  endif
+  |Empregabilidade|
+  if (Devolver para correcção?) then (sim)
+    :Indicar motivo da devolução;
+    |Sistema|
+    :Registar devolução para correcção e notificar estudante;
+    |Estudante|
+    :Corrigir entidade destinatária e voltar a submeter;
+    |Sistema|
+    :Guardar novo evento submetido;
+    :Notificar Empregabilidade;
+  else (avançar)
+    |Empregabilidade|
+    if (Estado submetido?) then (sim)
+      :Registar em elaboração;
+    elseif (Estado em elaboração?) then (sim)
+      :Preparar carta e registar aguarda carimbo;
+    else (aguarda carimbo)
+      |Tramitação física externa|
+      :Recolher assinatura e carimbo;
+      |Empregabilidade|
+      :Confirmar disponibilidade física da carta;
+      :Registar pronta;
+    endif
+    |Sistema|
+    :Validar transição, guardar estado e evento;
+    :Notificar estudante;
+  endif
+repeat while (Carta ainda não está pronta?) is (sim) not (não)
+|Estudante|
+:Consultar aviso de carta pronta;
+:Recolher carta livremente na estante;
+stop
+@enduml

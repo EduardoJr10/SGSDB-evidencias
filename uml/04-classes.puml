@@ -1,0 +1,308 @@
+@startuml
+title Diagrama de classes
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam nodesep 45
+skinparam ranksep 65
+class "Utilizador" as User {
+  {field} + Identificador : Inteiro
+  {field} + Nome : Texto
+  {field} + Correio electrónico : Texto
+  {field} + Perfil : Texto
+  # camposPermitidos : Lista<Texto>
+  # camposOcultosNaResposta : Lista<Texto>
+  # atributosCalculadosIncluídos : Lista<Texto>
+  {field} + Nome de apresentação : Texto {derivado}
+  --
+  {static} + apresentarIdentidade(nome: Texto, perfil: Texto opcional): Texto
+  # nomeDeApresentação(): DefiniçãoDeAtributo
+  # conversõesDeTipos(): Mapa
+  + estudante(): RelaçãoÚnica<Estudante>
+  + perfisAdicionais(): RelaçãoMúltipla<PerfilAdicional>
+  + temPerfil(perfil: Texto): Lógico
+  + filtrarGestores(consulta: Consulta): Consulta
+  + supervisor(): RelaçãoÚnica<Supervisor>
+}
+class "Perfil adicional" as UserRole {
+  {field} + Identificador do utilizador : Inteiro
+  {field} + Perfil : Texto
+  {field} + Concedido por : Inteiro opcional
+  # camposPermitidos : Lista<Texto>
+  --
+  + guardar(opções: Mapa = vazio): Lógico
+}
+class "Estudante" as Student {
+  {field} + Identificador do utilizador : Inteiro
+  {field} + Identificador do curso : Inteiro
+  {field} + Código : Texto
+  {field} + Activo : Lógico
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + utilizador(): RelaçãoÚnica<Utilizador>
+  + curso(): RelaçãoÚnica<Curso>
+  + estágios(): RelaçãoMúltipla<Estágio>
+}
+class "Supervisor" as Supervisor {
+  {field} + Identificador do utilizador : Inteiro
+  {field} + Activo : Lógico
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + utilizador(): RelaçãoÚnica<Utilizador>
+  + estágios(): RelaçãoMúltipla<Estágio>
+  + visitas(): RelaçãoMúltipla<Visita>
+}
+class "Curso" as Course {
+  {field} + Identificador : Inteiro
+  {field} + Nome : Texto
+  {field} + Activo : Lógico
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + estudantes(): RelaçãoMúltipla<Estudante>
+}
+class "Entidade de estágio" as InternshipEntity {
+  {field} + Identificador : Inteiro
+  {field} + Nome : Texto
+  {field} + Activo : Lógico
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + estágios(): RelaçãoMúltipla<Estágio>
+}
+class "Estágio" as Internship {
+  {field} + Identificador : Inteiro
+  {field} + Identificador do estudante : Inteiro
+  {field} + Identificador do supervisor : Inteiro opcional
+  {field} + Modalidade : Texto
+  {field} + Ano lectivo : Texto
+  {field} + Semestre : Texto opcional
+  {field} + Data de início : Data opcional
+  {field} + Data de fim : Data opcional
+  {field} + Identificador do estado do estágio : Inteiro
+  {field} + Identificador da entidade de estágio : Inteiro opcional
+  {field} + Nome da entidade : Texto opcional
+  {field} + Local do estágio : Texto opcional
+  {field} + Nome do tutor : Texto opcional
+  {field} + Contacto do tutor : Texto opcional
+  {field} + Horário do estudante : Texto opcional
+  {field} + Situação da entrega do relatório ou portefólio : Texto
+  {field} + Nota já lançada : Lógico opcional
+  # camposPermitidos : Lista<Texto>
+  # camposOcultosNaResposta : Lista<Texto>
+  # atributosCalculadosIncluídos : Lista<Texto>
+  {field} + Duração em semanas : Inteiro {derivado}
+  --
+  # duraçãoEmSemanas(): DefiniçãoDeAtributo
+  # conversõesDeTipos(): Mapa
+  + estudante(): RelaçãoÚnica<Estudante>
+  + entidadeDeEstágio(): RelaçãoÚnica<EntidadeDeEstágio>
+  + supervisor(): RelaçãoÚnica<Supervisor>
+  + estadoDoEstágio(): RelaçãoÚnica<EstadoDoEstágio>
+  + atribuições(): RelaçãoMúltipla<Atribuição>
+  + alteraçõesDosDados(): RelaçãoMúltipla<Alteração>
+  + registosDeVisitas(): RelaçãoMúltipla<Visita>
+  + visitasRealizadas(): RelaçãoMúltipla<Visita>
+  + marcações(): RelaçãoMúltipla<Marcação>
+  + horáriosAnexados(): RelaçãoMúltipla<Horário>
+}
+class "Estado do estágio" as InternshipStatus {
+  {field} + Identificador : Inteiro
+  {field} + Código : Texto
+  {field} + Designação : Texto
+  {field} + Ordem de apresentação : Inteiro
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + estágios(): RelaçãoMúltipla<Estágio>
+}
+class "Histórico de alterações do estágio" as InternshipDataEvent {
+  {field} + Identificador do estágio : Inteiro
+  {field} + Identificador do utilizador : Inteiro
+  {field} + Acção : Texto
+  {field} + Valores anteriores : Mapa
+  {field} + Valores novos : Mapa
+  {field} + Data de registo : DataHora
+  # camposPermitidos : Lista<Texto>
+  --
+  + autor(): RelaçãoÚnica<Utilizador>
+  # conversõesDeTipos(): Mapa
+}
+class "Atribuição de supervisor" as SupervisorAssignment {
+  {field} + Identificador do estágio : Inteiro
+  {field} + Identificador do supervisor anterior : Inteiro opcional
+  {field} + Identificador do supervisor : Inteiro opcional
+  {field} + Identificador do utilizador : Inteiro opcional
+  {field} + Motivo : Texto opcional
+  # camposPermitidos : Lista<Texto>
+  --
+  + supervisor(): RelaçãoÚnica<Supervisor>
+  + autor(): RelaçãoÚnica<Utilizador>
+}
+class "Pedido de carta" as InternshipLetterRequest {
+  {field} + Referência : Texto opcional
+  {field} + Identificador do estudante : Inteiro
+  {field} + Nome da entidade destinatária : Texto
+  {field} + Estado : Texto
+  # camposPermitidos : Lista<Texto>
+  --
+  {static} + normalizarEstado(estado: Texto): Texto
+  # conversõesDeTipos(): Mapa
+  + estudante(): RelaçãoÚnica<Estudante>
+  + responsávelPelaRevisão(): RelaçãoÚnica<Utilizador>
+  + históricoDeEstados(): RelaçãoMúltipla<HistóricoDoPedidoDeCarta>
+}
+class "Histórico do pedido de carta" as InternshipLetterStatusHistory {
+  {field} + Identificador do pedido de carta : Inteiro
+  {field} + Estado anterior : Texto opcional
+  {field} + Estado : Texto
+  {field} + Identificador do utilizador : Inteiro opcional
+  {field} + Observação : Texto opcional
+  # camposPermitidos : Lista<Texto>
+  --
+  + pedidoDeCarta(): RelaçãoÚnica<PedidoDeCarta>
+  + autor(): RelaçãoÚnica<Utilizador>
+}
+class "Marcação de supervisão" as SupervisionSchedule {
+  {field} + Identificador do estágio : Inteiro
+  {field} + Identificador do supervisor : Inteiro opcional
+  {field} + Identificador da marcação anterior : Inteiro opcional
+  {field} + Proposto por : Inteiro
+  {field} + Respondido por : Inteiro opcional
+  {field} + Data e hora propostas : DataHora
+  {field} + Estado : Texto
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + histórico(): RelaçãoMúltipla<RegistoDaMarcação>
+  + estágio(): RelaçãoÚnica<Estágio>
+  + proponente(): RelaçãoÚnica<Utilizador>
+  + autorDaResposta(): RelaçãoÚnica<Utilizador>
+}
+class "Histórico da marcação" as SupervisionScheduleEvent {
+  {field} + Identificador da marcação : Inteiro
+  {field} + Identificador do utilizador : Inteiro opcional
+  {field} + Estado anterior : Texto opcional
+  {field} + Estado : Texto
+  {field} + Motivo : Texto opcional
+  # camposPermitidos : Lista<Texto>
+  --
+  + autor(): RelaçãoÚnica<Utilizador>
+}
+class "Visita de supervisão" as Supervision {
+  {field} + Identificador do estágio : Inteiro
+  {field} + Identificador do supervisor : Inteiro
+  {field} + Identificador da marcação : Inteiro opcional
+  {field} + Data da visita : Data
+  {field} + Estado : Texto
+  {field} + Observações internas : Texto
+  {field} + Orientações : Texto opcional
+  {field} + Motivo da não realização : Texto opcional
+  {field} + Justificação de visita sem marcação : Texto opcional
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + estágio(): RelaçãoÚnica<Estágio>
+  + correcções(): RelaçãoMúltipla<Correcção>
+  + supervisor(): RelaçãoÚnica<Supervisor>
+}
+class "Horário anexado" as StudentScheduleDocument {
+  {field} + Identificador do estágio : Inteiro
+  {field} + Enviado por : Inteiro
+  {field} + Nome do ficheiro : Texto
+  {field} + Localização do ficheiro : Texto
+  {field} + Tipo do ficheiro : Texto
+  {field} + Tamanho do ficheiro : Inteiro
+  {field} + Data de registo : DataHora
+  # camposPermitidos : Lista<Texto>
+  # camposOcultosNaResposta : Lista<Texto>
+  --
+  + estágio(): RelaçãoÚnica<Estágio>
+}
+class "Documento geral" as PlatformDocument {
+  {field} + Enviado por : Inteiro opcional
+  {field} + Categoria : Texto opcional
+  {field} + Versão : Texto opcional
+  {field} + Visibilidade : Texto
+  {field} + Modalidade de estágio : Texto opcional
+  {field} + Activo : Lógico
+  {field} + Localização do ficheiro : Texto
+  {field} + Data de publicação : Data opcional
+  # camposPermitidos : Lista<Texto>
+  --
+  # conversõesDeTipos(): Mapa
+  + filtrarVisíveis(consulta: Consulta, utilizador: Utilizador): Consulta
+  + autorDoEnvio(): RelaçãoÚnica<Utilizador>
+}
+class "Correcção das orientações" as SupervisionCorrection {
+  {field} + Identificador da visita : Inteiro
+  {field} + Identificador do utilizador : Inteiro
+  {field} + Orientações anteriores : Texto opcional
+  {field} + Orientações : Texto opcional
+  {field} + Observações internas anteriores : Texto opcional
+  {field} + Observações internas : Texto opcional
+  {field} + Motivo : Texto
+  # camposPermitidos : Lista<Texto>
+  --
+  + autor(): RelaçãoÚnica<Utilizador>
+}
+entity "Histórico de concessão de perfis" as RoleEvent <<registo>> {
+  {field} Identificador do utilizador : Inteiro
+  {field} Identificador do autor : Inteiro opcional
+  {field} Perfil : Texto
+  {field} Acção : Texto
+}
+Supervision "1" -- "0..*" SupervisionCorrection
+User "1" -- "0..*" SupervisionCorrection : autor da correcção
+User "1" -- "0..*" RoleEvent : destinatário da concessão
+class "Notificação" as DatabaseNotification {
+  {field} + Identificador : Texto
+  {field} + Tipo de destinatário : Texto
+  {field} + Identificador do destinatário : Inteiro
+  {field} + Conteúdo : Mapa
+  {field} + Data de leitura : DataHora opcional
+  --
+  + marcarComoLida(): Vazio
+  + marcarComoNãoLida(): Vazio
+  + estáLida(): Lógico
+  + estáPorLer(): Lógico
+}
+User "1" -- "0..*" UserRole
+User "1" -- "0..1" Student
+User "1" -- "0..1" Supervisor
+Course "1" -- "0..*" Student
+Student "1" -- "0..*" Internship
+InternshipEntity "0..1" -- "0..*" Internship
+Supervisor "0..1" -- "0..*" Internship : atribuição actual
+InternshipStatus "1" -- "0..*" Internship : situação do estágio
+Internship "1" -- "0..*" SupervisorAssignment
+Supervisor "0..1" -- "0..*" SupervisorAssignment : novo supervisor
+Supervisor "0..1" -- "0..*" SupervisorAssignment : supervisor anterior
+User "0..1" -- "0..*" SupervisorAssignment : autor da atribuição
+Internship "1" -- "0..*" InternshipDataEvent
+User "1" -- "0..*" InternshipDataEvent : autor da alteração
+Student "1" -- "0..*" InternshipLetterRequest
+InternshipLetterRequest "1" -- "0..*" InternshipLetterStatusHistory
+User "0..1" -- "0..*" InternshipLetterStatusHistory : actor
+Internship "1" -- "0..*" SupervisionSchedule
+SupervisionSchedule "0..1" -- "0..*" SupervisionSchedule : proposta anterior
+SupervisionSchedule "1" -- "0..*" SupervisionScheduleEvent
+Supervisor "0..1" -- "0..*" SupervisionSchedule : supervisor da marcação
+User "1" -- "0..*" SupervisionSchedule : proponente
+User "0..1" -- "0..*" SupervisionSchedule : autor da resposta
+User "0..1" -- "0..*" SupervisionScheduleEvent : autor do evento
+Internship "1" -- "0..*" Supervision
+SupervisionSchedule "0..1" -- "0..1" Supervision : ligação opcional
+Supervisor "1" -- "0..*" Supervision
+User "0..1" -- "0..*" PlatformDocument : publicação
+Internship "1" -- "0..*" StudentScheduleDocument : horários anexados
+User "1" -- "0..*" StudentScheduleDocument : autor do envio
+User "1" -- "0..*" DatabaseNotification : destinatário
+User "0..1" -- "0..*" RoleEvent : autor da alteração de perfil
+legend bottom left
+  + Público    # Protegido    - Privado
+  Os dados do modelo são acessíveis através do Laravel.
+endlegend
+@enduml

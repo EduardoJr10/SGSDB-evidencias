@@ -1,0 +1,42 @@
+@startuml
+title Sequência do pedido de carta
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+actor Estudante as E
+participant "Interface Web" as UI
+participant "Pedidos de carta do estudante" as C
+participant "Gestão dos pedidos de carta" as A
+participant "Tramitação das cartas" as W
+database "Base de dados" as SQL
+participant "Notificações internas" as N
+actor Empregabilidade as O
+E -> UI : indicar entidade potencial
+UI -> C : submeter pedido de carta
+C -> C : validar sessão, perfil e dados
+C -> SQL : iniciar operação e proteger registo do estudante
+C -> SQL : verificar duplicação recente
+C -> SQL : pedido + referência + evento submetido
+C -> N : avisar operadores autorizados
+N -> SQL : aviso persistente na transacção
+C -> SQL : confirmar alterações
+C --> UI : redireccionar e carregar histórico
+O -> A : registar pedido em elaboração
+A -> W : alterar estado do pedido
+W -> SQL : iniciar operação e proteger o pedido
+W -> W : autorizar actor e transição
+W -> SQL : estado + evento com actor/hora/motivo
+W -> N : notificação persistente
+N -> SQL : inserir aviso na transacção
+W -> SQL : confirmar alterações
+O -> A : registar pedido a aguardar carimbo
+A -> W : alterar estado do pedido
+note over O, A : A assinatura e o carimbo são realizados fora do sistema.
+O -> A : registar carta pronta
+A -> W : alterar estado do pedido
+W -> SQL : iniciar operação, proteger pedido e validar
+W -> SQL : estado pronta + evento
+W -> N : avisar estudante de que a carta está pronta
+N -> SQL : aviso persistente
+W -> SQL : confirmar alterações
+E -> UI : consultar aviso e pedido
+@enduml

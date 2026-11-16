@@ -1,0 +1,75 @@
+@startuml
+
+title Arquitectura do sistema
+
+top to bottom direction
+
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 13
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam packageStyle rectangle
+skinparam linetype ortho
+skinparam ArrowColor #555555
+skinparam PackageBorderColor #777777
+skinparam PackageBackgroundColor #F8F9FA
+skinparam ComponentBorderColor #51728A
+skinparam ComponentBackgroundColor #EAF3F8
+skinparam DatabaseBorderColor #63866D
+skinparam DatabaseBackgroundColor #EDF6EF
+
+actor "Estudante" as EST
+actor "Supervisor\nAcadémico" as SUP
+actor "Pessoal da\nEmpregabilidade" as EMP
+
+package "1. CAMADA DE APRESENTAÇÃO" {
+
+  component "Interface Web\nReact 19 + TypeScript" as UI
+
+}
+
+package "2. CAMADA DE APLICAÇÃO\nLaravel 12 + Inertia 2" {
+
+  component "Autenticação\ne Perfis" as AUTH
+
+  component "Pedidos de\nCarta de Estágio" as CARTAS
+
+  component "Documentos Gerais\nPublicação e Consulta" as DOC
+
+  component "Atribuição e\nSupervisão de Estágios" as ESTAGIOS
+
+  component "Notificações\nInternas" as NOT
+
+  component "Consultas, Listas\ne Exportação" as REL
+
+}
+
+package "3. CAMADA DE DADOS" {
+
+  database "Base de Dados\nMySQL" as BD
+
+  folder "Armazenamento Privado\nDocumentos Gerais e Horários" as FILES
+
+}
+
+EST --> UI
+SUP --> UI
+EMP --> UI
+
+UI --> AUTH
+UI --> CARTAS
+UI --> DOC
+UI --> ESTAGIOS
+UI --> NOT
+UI --> REL
+
+CARTAS --> BD
+ESTAGIOS --> BD
+AUTH --> BD
+NOT --> BD
+REL --> BD
+DOC --> BD
+DOC --> FILES
+ESTAGIOS --> FILES : horários dos estudantes
+
+@enduml

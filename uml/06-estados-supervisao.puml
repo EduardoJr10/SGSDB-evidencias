@@ -1,0 +1,37 @@
+@startuml
+title Estados da marcação e da visita
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+state "Marcação" as Agenda {
+  state "Proposta pendente" as pending
+  state "Confirmada" as accepted
+  state "Recusada" as rejected
+  state "Cancelada" as cancelled
+  state "Remarcada" as rescheduled
+  state "Visita realizada" as held
+  state "Visita não realizada" as not_held
+  [*] --> pending : participante propõe
+  pending --> accepted : outra parte confirma / sem conflito
+  pending --> rejected : outra parte recusa / motivo
+  pending --> cancelled : participante cancela / motivo
+  accepted --> cancelled : participante cancela / motivo
+  pending --> rescheduled : remarca / motivo
+  accepted --> rescheduled : remarca / motivo
+  accepted --> held : supervisor regista visita realizada
+  accepted --> not_held : supervisor regista ausência / motivo
+  rescheduled --> [*]
+  cancelled --> [*]
+  rejected --> [*]
+  held --> [*]
+  not_held --> [*]
+}
+state "Registo da visita" as Visita {
+  state "Realizada" as realizada
+  state "Não realizada" as nao_realizada
+  state resultado <<choice>>
+  [*] --> resultado
+  resultado --> realizada : orientações escritas
+  resultado --> nao_realizada : motivo obrigatório
+  realizada --> realizada : corrigir orientações / motivo e histórico
+}
+@enduml

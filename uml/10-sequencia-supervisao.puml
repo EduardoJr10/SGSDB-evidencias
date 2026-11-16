@@ -1,0 +1,136 @@
+@startuml
+title Sequência das operações de supervisão
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+actor Estudante as E
+actor Supervisor as S
+participant "Interface Web" as UI
+participant "Dados do estágio do estudante" as Read
+participant "Actualização dos dados do estágio" as W
+participant "Gestão dos horários" as H
+participant "Gestão das marcações" as C
+participant "Acompanhamento pelo supervisor" as V
+database "Base de dados" as SQL
+collections "Ficheiros privados" as F
+participant "Notificações internas" as N
+
+opt Actualização dos dados do local
+  E -> UI : actualizar local, entidade provisória, tutor, contacto e horário
+  UI -> Read : enviar alterações dos dados do local
+  Read -> Read : validar proprietário activo e campos permitidos
+  Read -> W : guardar alterações do local
+  W -> SQL : iniciar operação e proteger registo do estágio
+  W -> W : revalidar proprietário e respeitar entidade confirmada
+  opt Dados alterados
+    W -> SQL : actualizar local e registar valores anteriores / novos
+    W -> N : avisar supervisor atribuído, se existir
+    N -> SQL : persistir aviso
+  end
+  W -> SQL : confirmar alterações
+end
+
+opt Anexação de horário, independente do texto
+  E -> UI : escolher horário PDF / JPEG / PNG até 10 MB
+  UI -> H : enviar horário do estudante
+  H -> H : autorizar proprietário activo e validar ficheiro
+  H -> SQL : iniciar operação e proteger registo do estágio
+  H -> H : revalidar proprietário
+  H -> F : guardar ficheiro privado com novo identificador
+  H -> SQL : inserir metadados, preservando os envios anteriores
+  H -> SQL : confirmar alterações
+end
+
+S -> UI : consultar estágio atribuído
+UI -> V : consultar dados do estágio
+V -> V : autorizar supervisor activo atribuído
+V -> SQL : carregar local, horários e histórico
+V --> UI : dados autorizados para preparar a visita
+opt Consultar horário anexado
+  S -> H : visualizar ou descarregar horário
+  H -> SQL : verificar supervisor actualmente atribuído
+  H -> F : ler caminho privado autorizado e verificar tipo do ficheiro
+  H --> S : conteúdo autorizado
+end
+
+opt Organizar marcação no sistema
+  E -> UI : propor data futura
+  UI -> C : enviar proposta de marcação
+  C -> C : validar participante e dados
+  C -> SQL : iniciar operação e proteger registos do supervisor e estágio
+  C -> C : revalidar participante e impedir outra proposta activa
+  C -> SQL : guardar proposta pendente e histórico
+  C -> N : avisar estudante e supervisor
+  C -> SQL : confirmar alterações
+
+  S -> UI : aceitar proposta do estudante
+  UI -> C : enviar resposta à proposta
+  C -> SQL : iniciar operação e proteger registos envolvidos e proposta
+  C -> C : validar atribuição actual, proposta pendente e resposta da outra parte
+  C -> SQL : verificar data futura e outra marcação confirmada na mesma data e hora
+  alt Data passada ou conflito
+    C -> SQL : anular alterações da operação
+    C --> UI : erro de validação, mantendo proposta pendente
+  else Aceitação válida
+    C -> SQL : guardar confirmação e histórico com autor e hora
+    C -> N : avisar participantes
+    C -> SQL : confirmar alterações
+  end
+
+  opt Remarcação com motivo
+    E -> UI : propor nova data ligada à anterior
+    UI -> C : enviar nova proposta com referência à marcação anterior
+    C -> SQL : iniciar operação e proteger registos envolvidos e proposta anterior
+    C -> C : validar participante, estado anterior e motivo
+    C -> SQL : assinalar proposta pendente ou confirmada anterior como remarcada
+    C -> SQL : criar proposta pendente ligada à anterior e guardar histórico
+    C -> N : avisar participantes
+    C -> SQL : confirmar alterações
+  end
+end
+
+S -> UI : registar resultado, data e orientações ou motivo
+UI -> V : enviar registo da visita
+V -> V : validar data e campos obrigatórios conforme o resultado
+V -> SQL : iniciar operação e proteger registo do estágio
+V -> V : revalidar supervisor atribuído e data da atribuição
+alt Com marcação ligada
+  V -> SQL : bloquear marcação do estágio
+  V -> V : exigir marcação confirmada do supervisor actual e data compatível
+else Sem marcação
+  V -> V : exigir justificação da visita sem marcação
+end
+V -> SQL : criar registo e actualizar marcação ligada para realizada / não realizada
+V -> N : avisar estudante do registo da visita
+V -> SQL : confirmar alterações
+
+E -> UI : consultar histórico de visitas
+UI -> Read : consultar dados do estágio do estudante
+Read -> Read : autorizar proprietário
+Read -> SQL : carregar registos e correcções
+Read --> UI : orientações e histórico, ocultando observações internas
+
+opt Correcção de visita realizada pelo próprio supervisor
+  S -> UI : corrigir orientações com motivo
+  UI -> V : enviar correcção das orientações
+  V -> SQL : iniciar operação e proteger registos do estágio e da visita
+  V -> V : validar autor ainda atribuído e resultado realizada
+  V -> SQL : guardar versão anterior e actualizar orientações / observações
+  V -> N : avisar estudante
+  V -> SQL : confirmar alterações
+end
+
+opt Situação do relatório ou portefólio
+  S -> UI : indicar situação documental
+  UI -> V : enviar situação do relatório ou portefólio
+  V -> V : autorizar atribuição e validar campos permitidos
+  V -> W : guardar situação documental
+  W -> SQL : iniciar operação e proteger estágio
+  W -> W : revalidar supervisor activo atribuído
+  opt Dados alterados
+    W -> SQL : actualizar situação e guardar evento anterior / novo
+    W -> N : avisar estudante
+  end
+  W -> SQL : confirmar alterações
+end
+
+@enduml

@@ -1,0 +1,102 @@
+@startuml
+title Actividades da supervisão
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+|Empregabilidade|
+start
+:Registar estágio e atribuir supervisor;
+|Sistema|
+:Guardar atribuição, actor, data e histórico;
+:Notificar estudante e supervisor;
+|Estudante|
+if (Actualizar dados do local?) then (sim)
+  :Actualizar entidade provisória, local,
+tutor, contacto e horário em texto;
+  |Sistema|
+  :Guardar autor, data e valores anteriores / novos
+apenas se houver alteração;
+  :Notificar supervisor se houver alteração;
+endif
+|Estudante|
+if (Anexar horário?) then (sim)
+  :Enviar PDF, JPEG ou PNG até 10 MB;
+  |Sistema|
+  :Validar proprietário activo e ficheiro;
+  :Guardar horário e dados do envio,
+preservando os envios anteriores;
+endif
+|Supervisor|
+:Consultar dados do local e horários autorizados;
+if (Organizar marcação no sistema?) then (sim)
+  repeat
+    |Estudante ou Supervisor|
+    :Propor data futura ou remarcar com motivo;
+    |Sistema|
+    :Validar participante e guardar proposta pendente;
+    :Na remarcação, ligar à anterior e preservar histórico;
+    :Notificar participantes;
+    |Estudante ou Supervisor|
+    if (Cancelar marcação?) then (sim)
+      :Indicar motivo;
+      |Sistema|
+      :Registar cancelamento, histórico e notificações;
+      stop
+    endif
+    |Outra parte|
+    if (Aceitar proposta?) then (sim)
+      |Sistema|
+      :Validar data futura e outra visita na mesma data e hora;
+      if (Confirmação válida?) then (sim)
+        :Registar confirmação, histórico e notificações;
+      else (não)
+        :Mostrar erro e conservar proposta pendente;
+      endif
+    else (recusar)
+      |Outra parte|
+      :Indicar motivo;
+      |Sistema|
+      :Registar recusa, histórico e notificações;
+    endif
+  repeat while (Ainda sem marcação confirmada?) is (sim) not (não)
+  |Supervisor|
+  :Seleccionar marcação confirmada para o registo;
+else (sem marcação)
+  |Supervisor|
+  :Justificar registo sem marcação;
+endif
+|Supervisor|
+:Indicar data real, sem data futura;
+if (Visita efectivamente realizada?) then (sim)
+  :Registar realizada e orientações escritas;
+else (não)
+  :Registar não realizada e motivo obrigatório;
+endif
+:Preencher observações internas, se necessário;
+|Sistema|
+:Validar supervisor atribuído, data e eventual marcação;
+:Guardar registo e actualizar o resultado da marcação,
+se existir;
+:Notificar estudante;
+:Contabilizar apenas visitas realizadas;
+|Estudante|
+:Consultar orientações, histórico e visitas em falta;
+|Supervisor|
+if (Corrigir orientações de visita própria realizada?) then (sim)
+  :Indicar orientações revistas e motivo;
+  |Sistema|
+  :Validar autor ainda atribuído;
+  :Preservar versões anteriores e notificar estudante;
+endif
+|Supervisor|
+if (Actualizar situação documental?) then (sim)
+  :Indicar relatório / portefólio
+por confirmar, por entregar ou entregue;
+  |Sistema|
+  :Guardar autor, data e valores anteriores / novos
+apenas se houver alteração;
+  :Notificar estudante se houver alteração;
+endif
+|Supervisor|
+:Consultar situação documental e contagem actual;
+stop
+@enduml

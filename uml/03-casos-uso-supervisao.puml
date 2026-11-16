@@ -1,0 +1,92 @@
+@startuml
+title Casos de uso — Supervisão
+
+skinparam defaultFontName SansSerif
+skinparam shadowing false
+skinparam backgroundColor #FFFFFF
+skinparam ArrowColor #555555
+skinparam ActorBorderColor #51728A
+skinparam UsecaseBackgroundColor #EAF3F8
+skinparam UsecaseBorderColor #51728A
+skinparam RectangleBackgroundColor #F8F9FA
+skinparam RectangleBorderColor #777777
+skinparam NoteBackgroundColor #EDF6EF
+skinparam NoteBorderColor #63866D
+
+left to right direction
+
+actor Estudante as E
+actor Supervisor as S
+actor "Pessoal da Empregabilidade" as O
+
+rectangle "Sistema de Gestão de Estágios Curriculares do ISDB" {
+
+  usecase "Atribuir ou reatribuir supervisor\nindividualmente ou em grupo" as U1
+
+  usecase "Consultar supervisor atribuído" as U2
+
+  usecase "Consultar estudantes atribuídos" as U3
+
+  usecase "Atualizar dados do local de estágio,\ntutor, contacto e horário" as U11
+
+  usecase "Confirmar entidade e gerir\ndados institucionais do estágio" as U16
+
+  usecase "Consultar dados do local\npara organizar visitas" as U12
+
+  usecase "Propor data de supervisão\nou remarcação" as U4
+
+  usecase "Responder à proposta\nde marcação" as U5
+
+  usecase "Cancelar marcação\ncom motivo" as U6
+
+  usecase "Registar visita realizada\nou não realizada" as U7
+
+  usecase "Consultar orientações\ne histórico de visitas" as U8
+
+  usecase "Corrigir orientações de visitas próprias\ncom motivo e histórico" as U13
+
+  usecase "Anexar horário\ndo próprio estágio" as U14
+
+  usecase "Controlar o mínimo\nde duas visitas" as U9
+
+  usecase "Registar situação do\nrelatório ou portefólio" as U10
+
+  usecase "Consultar situação do\nrelatório ou portefólio" as U15
+}
+
+E -- U2
+E -- U11
+E -- U12
+E -- U4
+E -- U5
+E -- U6
+E -- U8
+E -- U14
+E -- U9
+E -- U15
+
+S -- U3
+S -- U12
+S -- U4
+S -- U5
+S -- U6
+S -- U7
+S -- U8
+S -- U13
+S -- U9
+S -- U10
+S -- U15
+
+O -- U1
+O -- U16
+O -- U12
+O -- U8
+O -- U9
+O -- U15
+
+note right of U7
+  Visitas não realizadas não contam
+  para o mínimo de duas visitas.
+end note
+
+@enduml
