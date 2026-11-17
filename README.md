@@ -1,8 +1,12 @@
-# SGSDB diagramas
+# SGSDB evidências
 
-Diagramas UML do Sistema de Gestão de Estágios do Instituto Superior Dom Bosco, disponibilizados como material complementar da monografia de 2026.
+Material complementar da monografia de 2026 sobre o Sistema de Gestão de Estágios do Instituto Superior Dom Bosco.
 
-Este repositório reúne os dez códigos PlantUML retirados do Apêndice D da monografia e as respectivas imagens. As imagens dos diagramas permanecem no trabalho.
+O repositório reúne os dez modelos UML, os códigos PlantUML e as imagens em SVG e PNG, bem como o arquivo completo das 33 capturas dos testes funcionais. O Apêndice D remete para os diagramas e o Apêndice F conserva 14 capturas seleccionadas, com ligação ao arquivo integral.
+
+- [Consultar as evidências dos testes e a correspondência com as figuras do trabalho](evidencias-testes/).
+- [Abrir as 33 capturas originais](evidencias-testes/capturas/).
+- [Consultar o manifesto e os hashes dos ficheiros](evidencias-testes/manifesto.csv).
 
 ## Consultar os diagramas
 
@@ -23,7 +27,8 @@ Este repositório reúne os dez códigos PlantUML retirados do Apêndice D da mo
 
 - `uml/`: códigos editáveis em PlantUML (`.puml`).
 - `svg/`: imagens vectoriais, adequadas para ampliar sem perder definição.
-- `png/`: imagens para consulta e inserção em documentos.
+- `png/`: imagens dos diagramas para consulta e inserção em documentos.
+- `evidencias-testes/`: capturas originais dos testes funcionais, índice e manifesto.
 
 Os três ficheiros com o mesmo nome representam o mesmo diagrama. Para consultar o código, abrir a ligação PlantUML; para ver a imagem, abrir SVG ou PNG.
 
@@ -36,4 +41,4 @@ java -jar plantuml.jar -tsvg -o ../svg uml/*.puml
 java -jar plantuml.jar -tpng -o ../png uml/*.puml
 ```
 
-Os diagramas descrevem os fluxos e entidades principais do protótipo. Não incluem credenciais, dados de estudantes ou documentos privados.
+Os diagramas descrevem os fluxos e entidades principais do protótipo. As capturas apresentam os cenários de demonstração documentados na monografia.

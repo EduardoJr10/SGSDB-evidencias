@@ -1,0 +1,34 @@
+identificador_original,ficheiro,titulo,largura_px,altura_px,incluida_no_apendice_F,numero_no_apendice_F,sha256
+C13,capturas/C13.png,Autenticação e identificação do sistema,1920,1350,não,,90f4ee5d6c6de397a2c7b093662baf3fae04a06f8707845aeeb6ec75cdbba1c2
+C14,capturas/C14.png,Painel principal do estudante,1920,1350,não,,3e9b55aaf2b5485dbef505732eb40630855bd94dcacd3c6f875b1754838ff572
+C15,capturas/C15.png,Pedido de carta e consulta do estado pelo estudante,1920,1350,não,,d1fb8c16083b85159a0558c8932f3e99a254d9f093f0e4bfcecd2fb1cd895dc4
+C16,capturas/C16.png,Pedidos recebidos na área de gestão,1920,1350,sim,7,73c25af710371173ef2d8b15d3dc36ccfc5b4e5e34ae4bcd974bf822c392cbad
+C17,capturas/C17.png,Filtragem e selecção de estagiários para atribuição em grupo,1920,1350,não,,5d33d77c1517e62ac2e6813270e6dbba396d203c118f46c7778e0c65f65ed4bc
+C18,capturas/C18.png,Escolha do supervisor e revisão da atribuição em grupo,1920,1350,sim,10,ad1a364092e931d5341d2dc38fc01f4ce1ac4452155ce74c171318acaf997b9c
+C19,capturas/C19.png,Lista de estudantes disponibilizada ao supervisor,1920,1350,sim,11,e8cf6d9051fe7dd285e7def42f76b9f6420ffcf2b32b6b9116e1886333dc7dd5
+C20,capturas/C20.png,Acompanhamento e priorização das supervisões,1920,1350,não,,59d58f10ff59446a94f2832676fc65c6587c1c5624c239ff9d777dae31cfdb00
+C21,capturas/C21.png,Histórico de visita e orientações ao estudante,1920,1350,não,,98f669cf7ea942f31c50748c41b7b59dcd8d75b1b3841a83d1cd0e666db606d9
+C22,capturas/C22.png,Notificações internas do processo de estágio,1920,1350,sim,9,1915f1bf81a6fd3e279cf8274364c3c6934701896d7a34f926302a7797b90220
+C23,capturas/C23.png,Consulta dos documentos disponibilizados pela instituição,1280,900,não,,962b0bbfa76fe7eb00bda6757ee1c9c75b80a441f755595a07ad83de13bfc133
+C24,capturas/C24.png,Recusa de credenciais inválidas na autenticação,1280,900,sim,3,ea6db32950e224363003d1f3f91ea84e0e7b35b75d863b93f5782a386e055695
+C25,capturas/C25.png,Recusa do acesso de um estudante à área de gestão,1280,900,sim,4,72f4b4628ea547047a73aab1d95f2c02e8fa385ceaf887bde56d6425c70e3dd1
+C26,capturas/C26.png,Painel apresentado após autenticação da Empregabilidade,1280,1303,não,,01c15ef617878c74cbec3622bae0ec3cd81f21d46e858a8da7dd704ff0a39b05
+C27,capturas/C27.png,Painel apresentado após autenticação do supervisor,1280,1063,não,,43da1245d14464642b11e9f7c71f9fba14ba2bd562b0c94191b68edec7490154
+C28,capturas/C28.png,Validação do pedido de carta sem entidade destinatária,1280,1207,não,,3cce68d07dc10a6acc08fe9e5342e85339fd74cff23ab818e14352c0b30f59a7
+C29,capturas/C29.png,Pedido de carta registado no estado Submetido,1280,1183,sim,5,a2d776966b255bf91468cf68d27706f1af05ffac630a860ce3ffe638f95bd9f1
+C30,capturas/C30.png,Recusa da passagem directa de Submetido para Pronta,1280,900,sim,8,87e1231a1d3f45af33b5f74fd177ae0643ff7fe0bb29ad9b1142af4e0db77ccb
+C31,capturas/C31.png,Carta pronta com histórico das etapas e responsáveis,1280,1085,sim,6,43649fc9759786dc176f9f7bfec4e892a7c0de5f171cd2c15ae7efebad7fa31a
+C32,capturas/C32.png,Confirmação da atribuição de estudantes ao supervisor,1280,1548,não,,df08693d1601b67d9900d17c773be8261b8778830133819f2af57fba9b192c34
+C33,capturas/C33.png,Recusa de uma reatribuição sem motivo obrigatório,1280,900,não,,81615f9ef5c23fee5f9d967be2ea7565532ad80bf5b4038a458a21f88c217882
+C34,capturas/C34.png,Histórico da atribuição de supervisor ao estudante,1280,900,não,,0389a8e63cca68edbe8968b019dfa2c665a890b8783c3937f3a36d89eec81f79
+C35,capturas/C35.png,Confirmação da data de supervisão na área do supervisor,1280,900,não,,2bd22785b7ab8e8142c3969396ef3290ac4d9c2b914cd4487739775e418e9bf2
+C36,capturas/C36.png,Data de supervisão confirmada na área do estudante,1280,900,não,,6f3299a3b9c7ff015bbfd6db39f1fa5b59a7043674c34004312e83e948c89c4b
+C37,capturas/C37.png,Remarcação da supervisão com preservação do histórico,1280,900,sim,12,9f9c040e2c8a5ac914a87c6824394469493cb286a8a7eaec6471bae6f99575de
+C38,capturas/C38.png,Notificação da remarcação recebida pelo estudante,1280,1104,não,,0a21aaf5b795b57d86d1b975ebb8c1244aa1ed563b2e042153c29e71d42681ac
+C39,capturas/C39.png,Preenchimento do registo de uma nova visita de supervisão,1280,900,não,,da3c9060de48499f66e36868908d3f6cef7c1bdbbd9b7d4a1ac98de44b77235d
+C40,capturas/C40.png,Visita guardada e apresentada no histórico do supervisor,1280,900,sim,13,6e840b93eb6429f33e6308c08d21e457505ec8e1e528dff0acc5d8d79943d690
+C41,capturas/C41.png,Consulta das orientações na área do estudante,1280,900,sim,14,77d21fd49952a7f33e3813e457a641376346ad44329060731d4360b566749dbb
+C42,capturas/C42.png,Recusa da consulta do estágio de outro estudante,1280,900,não,,72f4b4628ea547047a73aab1d95f2c02e8fa385ceaf887bde56d6425c70e3dd1
+C43,capturas/C43.png,Documento publicado pela Empregabilidade,1280,900,não,,addbf41a8d1297f14b5d84de348eca3892a5040bd7a99fcfd6297cbe4f7b6cbe
+C44,capturas/C44.png,Consulta do Regulamento de Estágios no navegador,1280,900,sim,15,7a86f79cb06a9bc8881dc2df991d87a0bdc7e3ef55c1dc76328fe8fdd20b1e7b
+C45,capturas/C45.png,Descarga do Regulamento de Estágios concluída no navegador,1280,900,sim,16,fa17e9d55b6d3c838262c2665d5992f954bcb6d05fc058b27abd555294924dbc
