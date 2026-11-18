@@ -2,11 +2,13 @@
 
 Material complementar da monografia de 2026 sobre o Sistema de Gestão de Estágios do Instituto Superior Dom Bosco.
 
-O repositório reúne os dez modelos UML, os códigos PlantUML e as imagens em SVG e PNG, bem como o arquivo completo das 33 capturas dos testes funcionais. O Apêndice D remete para os diagramas e o Apêndice F conserva 14 capturas seleccionadas, com ligação ao arquivo integral.
+O repositório reúne os dez modelos UML, os códigos PlantUML e as imagens em SVG e PNG, o arquivo completo das 33 capturas dos testes funcionais e os oito gráficos do Capítulo IV, com o respectivo código Python. O trabalho remete para este material nos apêndices dedicados aos diagramas, às evidências dos testes e aos gráficos.
 
 - [Consultar as evidências dos testes e a correspondência com as figuras do trabalho](evidencias-testes/).
 - [Abrir as 33 capturas originais](evidencias-testes/capturas/).
 - [Consultar o manifesto e os hashes dos ficheiros](evidencias-testes/manifesto.csv).
+
+- [Consultar os gráficos, o código Python e as instruções de reprodução](graficos-python/).
 
 ## Consultar os diagramas
 
@@ -29,6 +31,7 @@ O repositório reúne os dez modelos UML, os códigos PlantUML e as imagens em S
 - `svg/`: imagens vectoriais, adequadas para ampliar sem perder definição.
 - `png/`: imagens dos diagramas para consulta e inserção em documentos.
 - `evidencias-testes/`: capturas originais dos testes funcionais, índice e manifesto.
+- `graficos-python/`: código Python, gráficos PNG e instruções para reprodução.
 
 Os três ficheiros com o mesmo nome representam o mesmo diagrama. Para consultar o código, abrir a ligação PlantUML; para ver a imagem, abrir SVG ou PNG.
 
